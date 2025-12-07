@@ -54,6 +54,8 @@ const carrotTypes = [
 
 export default function Index() {
   const [flyingCarrots, setFlyingCarrots] = useState<FlyingCarrot[]>([]);
+  const [carrotClicks, setCarrotClicks] = useState(0);
+  const [showClicker, setShowClicker] = useState(false);
 
   useEffect(() => {
     const carrots: FlyingCarrot[] = [];
@@ -82,6 +84,18 @@ export default function Index() {
   const scrollToJoin = () => {
     const joinSection = document.getElementById('join');
     joinSection?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleCarrotClick = () => {
+    setCarrotClicks(prev => prev + 1);
+  };
+
+  const openClicker = () => {
+    setShowClicker(true);
+  };
+
+  const closeClicker = () => {
+    setShowClicker(false);
   };
 
   return (
@@ -121,6 +135,10 @@ export default function Index() {
               <Button onClick={scrollToGallery} size="lg" variant="outline" className="text-lg px-8 py-6 border-2 border-primary text-primary hover:bg-primary hover:text-white shadow-xl hover:scale-105 transition-transform">
                 <Icon name="Image" className="mr-2" size={24} />
                 Смотреть галерею
+              </Button>
+              <Button onClick={openClicker} size="lg" className="text-lg px-8 py-6 bg-accent hover:bg-accent/90 shadow-xl hover:scale-105 transition-transform">
+                <Icon name="Mouse" className="mr-2" size={24} />
+                Кликер морковок
               </Button>
             </div>
           </div>
@@ -178,6 +196,41 @@ export default function Index() {
           </div>
         </div>
       </section>
+
+      {showClicker && (
+        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4 animate-fade-in">
+          <div className="bg-card rounded-3xl shadow-2xl max-w-2xl w-full p-8 relative border-4 border-primary animate-scale-in">
+            <button 
+              onClick={closeClicker}
+              className="absolute top-4 right-4 text-4xl text-muted-foreground hover:text-foreground transition-colors"
+            >
+              ×
+            </button>
+            
+            <h2 className="text-4xl font-bold text-center mb-4 text-primary">
+              Кликер морковок 🥕
+            </h2>
+            
+            <div className="text-center mb-8">
+              <p className="text-6xl font-black text-accent mb-2">{carrotClicks}</p>
+              <p className="text-xl text-muted-foreground">морковок собрано</p>
+            </div>
+
+            <div className="flex justify-center mb-6">
+              <button
+                onClick={handleCarrotClick}
+                className="text-9xl hover:scale-110 active:scale-95 transition-transform cursor-pointer select-none animate-float"
+              >
+                🥕
+              </button>
+            </div>
+
+            <p className="text-center text-muted-foreground">
+              Кликай на морковку, чтобы собирать урожай!
+            </p>
+          </div>
+        </div>
+      )}
 
       <footer className="relative z-20 bg-primary/10 py-12 text-center">
         <p className="text-lg text-foreground/70 mb-6">
