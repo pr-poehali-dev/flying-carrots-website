@@ -56,6 +56,7 @@ export default function Index() {
   const [flyingCarrots, setFlyingCarrots] = useState<FlyingCarrot[]>([]);
   const [carrotClicks, setCarrotClicks] = useState(0);
   const [showClicker, setShowClicker] = useState(false);
+  const [clickEffects, setClickEffects] = useState<{id: number, x: number, y: number}[]>([]);
 
   useEffect(() => {
     const carrots: FlyingCarrot[] = [];
@@ -86,8 +87,29 @@ export default function Index() {
     joinSection?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const handleCarrotClick = () => {
+  const handleCarrotClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     setCarrotClicks(prev => prev + 1);
+    
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const newEffect = { id: Date.now(), x, y };
+    setClickEffects(prev => [...prev, newEffect]);
+    
+    setTimeout(() => {
+      setClickEffects(prev => prev.filter(effect => effect.id !== newEffect.id));
+    }, 1000);
+  };
+
+  const getAchievement = () => {
+    if (carrotClicks >= 1000) return { emoji: '👑', title: 'Морковный король!', color: 'text-yellow-500' };
+    if (carrotClicks >= 500) return { emoji: '🌟', title: 'Легенда морковки!', color: 'text-purple-500' };
+    if (carrotClicks >= 250) return { emoji: '🔥', title: 'Огненный фермер!', color: 'text-orange-500' };
+    if (carrotClicks >= 100) return { emoji: '💎', title: 'Алмазный сборщик!', color: 'text-cyan-500' };
+    if (carrotClicks >= 50) return { emoji: '⭐', title: 'Звёздный кликер!', color: 'text-blue-500' };
+    if (carrotClicks >= 10) return { emoji: '🌱', title: 'Начинающий фермер', color: 'text-green-500' };
+    return { emoji: '🥕', title: 'Новичок', color: 'text-orange-400' };
   };
 
   const openClicker = () => {
@@ -211,23 +233,52 @@ export default function Index() {
               Кликер морковок 🥕
             </h2>
             
-            <div className="text-center mb-8">
+            <div className="text-center mb-4">
               <p className="text-6xl font-black text-accent mb-2">{carrotClicks}</p>
               <p className="text-xl text-muted-foreground">морковок собрано</p>
             </div>
 
-            <div className="flex justify-center mb-6">
+            <div className={`text-center mb-6 py-3 px-6 rounded-xl bg-gradient-to-r from-primary/20 to-accent/20 border-2 border-primary/30`}>
+              <p className={`text-2xl font-bold ${getAchievement().color} animate-pulse`}>
+                {getAchievement().emoji} {getAchievement().title}
+              </p>
+            </div>
+
+            <div className="flex justify-center mb-6 relative">
               <button
                 onClick={handleCarrotClick}
-                className="text-9xl hover:scale-110 active:scale-95 transition-transform cursor-pointer select-none animate-float"
+                className="text-9xl hover:scale-110 active:scale-95 transition-transform cursor-pointer select-none animate-float relative"
               >
                 🥕
+                {clickEffects.map(effect => (
+                  <span
+                    key={effect.id}
+                    className="absolute text-4xl font-bold text-accent pointer-events-none animate-fade-in"
+                    style={{
+                      left: `${effect.x}px`,
+                      top: `${effect.y}px`,
+                      animation: 'float-up 1s ease-out'
+                    }}
+                  >
+                    +1
+                  </span>
+                ))}
               </button>
             </div>
 
-            <p className="text-center text-muted-foreground">
-              Кликай на морковку, чтобы собирать урожай!
-            </p>
+            <div className="text-center space-y-2">
+              <p className="text-sm text-muted-foreground">
+                Достижения:
+              </p>
+              <div className="flex flex-wrap gap-2 justify-center text-xs">
+                <span className={carrotClicks >= 10 ? 'opacity-100' : 'opacity-30'}>🌱 10</span>
+                <span className={carrotClicks >= 50 ? 'opacity-100' : 'opacity-30'}>⭐ 50</span>
+                <span className={carrotClicks >= 100 ? 'opacity-100' : 'opacity-30'}>💎 100</span>
+                <span className={carrotClicks >= 250 ? 'opacity-100' : 'opacity-30'}>🔥 250</span>
+                <span className={carrotClicks >= 500 ? 'opacity-100' : 'opacity-30'}>🌟 500</span>
+                <span className={carrotClicks >= 1000 ? 'opacity-100' : 'opacity-30'}>👑 1000</span>
+              </div>
+            </div>
           </div>
         </div>
       )}
