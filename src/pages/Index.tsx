@@ -97,9 +97,12 @@ export default function Index() {
             <h1 className="text-6xl md:text-8xl font-bold text-primary mb-6 drop-shadow-lg">
               🥕 Морковное царство 🥕
             </h1>
-            <p className="text-2xl md:text-3xl text-foreground/80 mb-8 font-medium">
+            <p className="text-2xl md:text-3xl text-foreground/80 mb-4 font-medium">
               Добро пожаловать в мир летающих морковок!
             </p>
+            <h2 className="text-4xl md:text-6xl font-black bg-gradient-to-r from-orange-500 via-red-500 to-purple-600 bg-clip-text text-transparent animate-pulse drop-shadow-2xl mb-8">
+              ркн сынша лавы
+            </h2>
             <div className="flex gap-4 justify-center flex-wrap">
               <Button size="lg" className="text-lg px-8 py-6 bg-primary hover:bg-primary/90 shadow-xl hover:scale-105 transition-transform">
                 <Icon name="Sparkles" className="mr-2" size={24} />
