@@ -74,6 +74,16 @@ export default function Index() {
     setFlyingCarrots(carrots);
   }, []);
 
+  const scrollToGallery = () => {
+    const gallerySection = document.getElementById('gallery');
+    gallerySection?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const scrollToJoin = () => {
+    const joinSection = document.getElementById('join');
+    joinSection?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <div className="min-h-screen relative overflow-hidden">
       {flyingCarrots.map((carrot) => (
@@ -104,11 +114,11 @@ export default function Index() {
               ркн сынша лавы
             </h2>
             <div className="flex gap-4 justify-center flex-wrap">
-              <Button size="lg" className="text-lg px-8 py-6 bg-primary hover:bg-primary/90 shadow-xl hover:scale-105 transition-transform">
+              <Button onClick={scrollToJoin} size="lg" className="text-lg px-8 py-6 bg-primary hover:bg-primary/90 shadow-xl hover:scale-105 transition-transform">
                 <Icon name="Sparkles" className="mr-2" size={24} />
                 Начать приключение
               </Button>
-              <Button size="lg" variant="outline" className="text-lg px-8 py-6 border-2 border-primary text-primary hover:bg-primary hover:text-white shadow-xl hover:scale-105 transition-transform">
+              <Button onClick={scrollToGallery} size="lg" variant="outline" className="text-lg px-8 py-6 border-2 border-primary text-primary hover:bg-primary hover:text-white shadow-xl hover:scale-105 transition-transform">
                 <Icon name="Image" className="mr-2" size={24} />
                 Смотреть галерею
               </Button>
@@ -117,7 +127,7 @@ export default function Index() {
         </div>
       </section>
 
-      <section className="relative z-20 px-4 py-20 bg-gradient-to-b from-transparent to-muted/30">
+      <section id="gallery" className="relative z-20 px-4 py-20 bg-gradient-to-b from-transparent to-muted/30">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-primary">
             Коллекция морковок
@@ -151,7 +161,7 @@ export default function Index() {
         </div>
       </section>
 
-      <section className="relative z-20 px-4 py-20">
+      <section id="join" className="relative z-20 px-4 py-20">
         <div className="max-w-4xl mx-auto text-center">
           <div className="bg-card p-12 rounded-3xl shadow-2xl border-4 border-primary">
             <div className="text-8xl mb-6 animate-float-slow">🥕</div>
