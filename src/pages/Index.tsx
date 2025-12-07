@@ -166,13 +166,13 @@ export default function Index() {
         </div>
       </section>
 
-      <footer className="relative z-20 bg-primary/10 py-8 text-center">
-        <p className="text-lg text-foreground/70 mb-2">
+      <footer className="relative z-20 bg-primary/10 py-12 text-center">
+        <p className="text-lg text-foreground/70 mb-6">
           🥕 Сделано с любовью к морковкам 🥕
         </p>
-        <p className="text-2xl font-bold text-primary animate-pulse">
+        <h3 className="text-5xl md:text-7xl font-black bg-gradient-to-r from-orange-500 via-red-500 to-purple-600 bg-clip-text text-transparent animate-pulse drop-shadow-2xl">
           ркн сынша лавы
-        </p>
+        </h3>
       </footer>
     </div>
   );
